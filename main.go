@@ -76,5 +76,8 @@ func batchRun(g *gin.Context) {
 
 func run(cmd string, args []string) bool {
 	logging.Info("run: %s %v", cmd, args)
-	return exec.Command(cmd, args...).Start() == nil
+	c := exec.Command(cmd, args...)
+	c.Stdout = os.Stdout
+	c.Stderr = os.Stderr
+	return c.Start() == nil
 }
